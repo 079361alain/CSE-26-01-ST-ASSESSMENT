@@ -23,6 +23,7 @@ router.post('/register', async (req, res) => {
 });
 
 
+
 router.get('/', async (req, res) => {
   try {
     const beneficiaries = await Beneficiary.find().sort({ createdAt: -1 });
