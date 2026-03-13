@@ -2,18 +2,26 @@
 
 This project has:
 
-- a Vue frontend in the root folder
+- a Vue frontend inside `frontend`
 - an Express and MongoDB backend inside `backend`
 
 ## Frontend Setup
 
-1. Copy `.env.example` to `.env`
-2. Make sure `VITE_API_URL` points to the backend
-3. Run:
+1. Go into the frontend folder
+2. Copy `.env.example` to `.env`
+3. Make sure `VITE_API_URL` points to the backend
+4. Run:
 
 ```sh
+cd frontend
 npm install
 npm run dev
+```
+
+Frontend files are inside:
+
+```sh
+frontend
 ```
 
 Frontend default URL:
@@ -50,5 +58,6 @@ POST /api/beneficiaries
 ## Build Frontend
 
 ```sh
+cd frontend
 npm run build
 ```
