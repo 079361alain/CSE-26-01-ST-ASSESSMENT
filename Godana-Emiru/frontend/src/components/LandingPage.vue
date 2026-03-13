@@ -1,6 +1,9 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import axios from 'axios'
+
+const successMessage = ref(false);
+const errors = reactive({})
 
 const form = reactive({
   firstName: '',
@@ -17,7 +20,8 @@ const form = reactive({
 const submitForm = async () => {
   try {
     const response = await axios.post('http://localhost:5000/api/beneficiaries/register', form)
-    alert('Beneficiary Registered Successfully!')
+    // alert('Beneficiary Registered Successfully!')
+    successMessage.value = true
     // Reset form
     Object.keys(form).forEach(key => form[key] = key === 'gender' ? 'Male' : '')
   } catch (error) {
@@ -36,6 +40,13 @@ const submitForm = async () => {
     </div>
 
     <div class="right-panel">
+
+      <Transition name="slide">
+        <div v-if="successMessage" class="success-toast">
+          <span>Beneficiary registered successfully</span>
+          <button @click="successMessage = false" class="close-toast">&times;</button>
+        </div>
+      </Transition>
       <h1 class="form-title">BENEFICIARY REGISTRATION FORM</h1>
       
       <form @submit.prevent="submitForm" class="registration-form">
@@ -115,6 +126,45 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
+
+
+.success-toast {
+  background-color: #00B050; /* Exact green from screenshot 6 */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.close-toast {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.close-toast:hover {
+  opacity: 0.8;
+}
+
+/* Transition animation for a smooth entrance */
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.4s ease;
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+
 .registration-layout {
   display: flex;
   min-height: 100vh;
